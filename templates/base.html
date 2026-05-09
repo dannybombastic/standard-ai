@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}StandarCloud{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+  <style>
+    body { background: #f8f9fa; }
+    .sidebar { min-height: calc(100vh - 56px); background: #212529; }
+    .sidebar a { color: #adb5bd; }
+    .sidebar a:hover, .sidebar a.active { color: #fff; }
+  </style>
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark px-3">
+  <a class="navbar-brand fw-bold" href="{% url 'home' %}">⚡ StandarCloud</a>
+  <div class="d-flex gap-3 align-items-center">
+    {% if user.is_authenticated %}
+      <span class="text-light small">{{ user.username }}</span>
+      <a href="{% url 'accounts:logout' %}" class="btn btn-sm btn-outline-light">Logout</a>
+    {% else %}
+      <a href="{% url 'accounts:login' %}" class="btn btn-sm btn-outline-light">Login</a>
+    {% endif %}
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    {% if user.is_authenticated %}
+    <nav class="col-md-2 sidebar py-3 d-flex flex-column gap-2 ps-4">
+      <a href="{% url 'projects:list' %}" class="text-decoration-none py-1">📁 Projects</a>
+      <a href="{% url 'tokens:list' %}" class="text-decoration-none py-1">🔑 API Tokens</a>
+      <a href="{% url 'accounts:profile' %}" class="text-decoration-none py-1">👤 Profile</a>
+    </nav>
+    <main class="col-md-10 py-4">
+    {% else %}
+    <main class="col-12 py-4">
+    {% endif %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ project.name }} — StandarCloud{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h4 class="mb-0">{{ project.name }}</h4>
+    <small class="text-muted">{{ project.slug }}</small>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="{% url 'projects:update' project.slug %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+    <a href="{% url 'projects:delete' project.slug %}" class="btn btn-sm btn-outline-danger">Delete</a>
+  </div>
+</div>
+
+{% if project.description %}
+<p class="text-muted">{{ project.description }}</p>
+{% endif %}
+
+<div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+  <h6 class="mb-0">Assets</h6>
+  <div class="d-flex gap-2 flex-wrap">
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'assets:create_typed' project.slug 'skill' %}">+ Skill</a>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'assets:create_typed' project.slug 'prompt' %}">+ Prompt</a>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'assets:create_typed' project.slug 'spec' %}">+ Spec</a>
+    <a class="btn btn-sm btn-outline-secondary" href="{% url 'assets:create' project.slug %}">+ Asset</a>
+    <a class="btn btn-sm btn-outline-secondary" href="{% url 'assets:list' project.slug %}">View all</a>
+  </div>
+</div>
+
+{% if assets %}
+<table class="table table-sm table-hover">
+  <thead><tr><th>Name</th><th>Type</th><th>Size</th><th>Updated</th></tr></thead>
+  <tbody>
+    {% for asset in assets %}
+    <tr>
+      <td><a href="{% url 'assets:detail' project.slug asset.pk %}">{{ asset.name }}</a></td>
+      <td><span class="badge bg-info text-dark">{{ asset.asset_type }}</span></td>
+      <td>{{ asset.size_bytes|filesizeformat }}</td>
+      <td>{{ asset.updated_at|date:"Y-m-d H:i"|default:"—" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="text-muted">No assets yet. Create a Skill/Prompt/Spec to get started.</p>
+{% endif %}
+
+<a href="{% url 'projects:list' %}" class="btn btn-sm btn-outline-secondary mt-3">← Back</a>
+{% endblock %}

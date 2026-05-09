@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Revoke Token — StandarCloud{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card shadow-sm border-danger">
+      <div class="card-body p-4">
+        <h5 class="card-title text-danger">Revoke Token</h5>
+        <p>Are you sure you want to revoke token <strong>{{ token.name }}</strong>? Any MCP clients using it will lose access immediately.</p>
+        <form method="post">
+          {% csrf_token %}
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger">Yes, revoke</button>
+            <a href="{% url 'tokens:list' %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

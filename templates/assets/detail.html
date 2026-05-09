@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ asset.name }} — StandarCloud{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h4 class="mb-0">{{ asset.name }}</h4>
+    <small class="text-muted">{{ asset.asset_type }} · {{ asset.project.name }}</small>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="{% url 'assets:update' asset.project.slug asset.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+    <a href="{% url 'assets:delete' asset.project.slug asset.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+    <a href="{% url 'assets:list' asset.project.slug %}" class="btn btn-sm btn-outline-secondary">← Back</a>
+  </div>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card text-center py-3">
+      <div class="fw-bold">{{ asset.size_bytes|filesizeformat }}</div>
+      <small class="text-muted">Size</small>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center py-3">
+      <div class="fw-bold"><code>{{ asset.path }}</code></div>
+      <small class="text-muted">Path</small>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center py-3">
+      <div class="fw-bold">{{ asset.updated_at|date:"Y-m-d H:i"|default:"—" }}</div>
+      <small class="text-muted">Updated</small>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center py-3">
+      <div class="fw-bold">{{ asset.content_hash|truncatechars:12|default:"—" }}</div>
+      <small class="text-muted">Content hash</small>
+    </div>
+  </div>
+</div>
+
+{% if asset.content %}
+<h6>Content</h6>
+<pre class="bg-light rounded p-3 border" style="max-height:500px;overflow:auto;"><code>{{ asset.content }}</code></pre>
+{% endif %}
+{% endblock %}

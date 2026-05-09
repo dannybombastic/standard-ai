@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Projects — StandarCloud{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="mb-0">📁 Projects</h4>
+  <a href="{% url 'projects:create' %}" class="btn btn-primary btn-sm">+ New Project</a>
+</div>
+
+{% if projects %}
+<div class="row g-3">
+  {% for project in projects %}
+  <div class="col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ project.name }}</h5>
+        <p class="card-text text-muted small">{{ project.description|truncatewords:20|default:"No description." }}</p>
+        <span class="badge bg-secondary">{{ project.assets.count }} assets</span>
+      </div>
+      <div class="card-footer d-flex justify-content-between align-items-center">
+        <small class="text-muted">{{ project.updated_at|date:"Y-m-d" }}</small>
+        <a href="{% url 'projects:detail' project.slug %}" class="btn btn-sm btn-outline-primary">Open</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5 text-muted">
+  <p>No projects yet. <a href="{% url 'projects:create' %}">Create your first project</a>.</p>
+</div>
+{% endif %}
+{% endblock %}

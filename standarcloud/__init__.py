@@ -1,0 +1,1 @@
+# standarcloud Django project

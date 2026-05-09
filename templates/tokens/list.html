@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}API Tokens — StandarCloud{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="mb-0">🔑 API Tokens</h4>
+  <a href="{% url 'tokens:create' %}" class="btn btn-primary btn-sm">+ New Token</a>
+</div>
+
+{% if tokens %}
+<table class="table table-hover">
+  <thead><tr><th>Name</th><th>Project</th><th>Prefix</th><th>Created</th><th>Last used</th><th></th></tr></thead>
+  <tbody>
+    {% for token in tokens %}
+    <tr>
+      <td>{{ token.name }}</td>
+      <td>{{ token.project.name }}</td>
+      <td><code>{{ token.prefix }}…</code></td>
+      <td>{{ token.created_at|date:"Y-m-d" }}</td>
+      <td>{{ token.last_used_at|date:"Y-m-d H:i"|default:"Never" }}</td>
+      <td>
+        <a href="{% url 'tokens:delete' token.pk %}" class="btn btn-sm btn-outline-danger">Revoke</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="text-center py-5 text-muted">
+  <p>No tokens yet. <a href="{% url 'tokens:create' %}">Create your first token</a>.</p>
+</div>
+{% endif %}
+{% endblock %}

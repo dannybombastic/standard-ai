@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Profile — StandarCloud{% endblock %}
+{% block content %}
+<h4 class="mb-4">👤 Profile</h4>
+<div class="card shadow-sm" style="max-width:480px">
+  <div class="card-body">
+    <dl class="row mb-0">
+      <dt class="col-sm-4">Username</dt><dd class="col-sm-8">{{ user.username }}</dd>
+      <dt class="col-sm-4">Email</dt><dd class="col-sm-8">{{ user.email|default:"—" }}</dd>
+      <dt class="col-sm-4">Joined</dt><dd class="col-sm-8">{{ user.date_joined|date:"Y-m-d" }}</dd>
+    </dl>
+  </div>
+</div>
+{% endblock %}
