@@ -8,6 +8,7 @@
   </div>
   <div class="d-flex gap-2 flex-wrap">
     <a class="btn btn-sm btn-outline-primary" href="{% url 'assets:create_typed' project.slug 'skill' %}">+ Skill</a>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'assets:create_typed' project.slug 'agent' %}">+ Agent</a>
     <a class="btn btn-sm btn-outline-primary" href="{% url 'assets:create_typed' project.slug 'prompt' %}">+ Prompt</a>
     <a class="btn btn-sm btn-outline-primary" href="{% url 'assets:create_typed' project.slug 'spec' %}">+ Spec</a>
     <a class="btn btn-sm btn-outline-secondary" href="{% url 'assets:create' project.slug %}">+ Asset</a>
@@ -35,8 +36,12 @@
       <td><code>{{ asset.path }}</code></td>
       <td>{{ asset.size_bytes|filesizeformat }}</td>
       <td>{{ asset.updated_at|date:"Y-m-d H:i"|default:"—" }}</td>
-      <td>
-        <a href="{% url 'assets:detail' project.slug asset.pk %}" class="btn btn-sm btn-outline-primary">View</a>
+      <td class="text-end">
+        <div class="d-flex gap-2 justify-content-end">
+          <a href="{% url 'assets:detail' project.slug asset.pk %}" class="btn btn-sm btn-outline-primary">View</a>
+          <a href="{% url 'assets:update' project.slug asset.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+          <a href="{% url 'assets:delete' project.slug asset.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </div>
       </td>
     </tr>
     {% endfor %}

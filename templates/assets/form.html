@@ -22,14 +22,49 @@
     <form method="post">
       {% csrf_token %}
 
-      {% for field in form %}
-        <div class="mb-3">
-          <label class="form-label">{{ field.label }}</label>
-          {{ field }}
-          {% if field.help_text %}<div class="form-text">{{ field.help_text }}</div>{% endif %}
-          {% if field.errors %}<div class="text-danger small">{{ field.errors }}</div>{% endif %}
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+      {% endif %}
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-4">
+          <label class="form-label">{{ form.asset_type.label }}</label>
+          {{ form.asset_type }}
+          {% if form.asset_type.errors %}<div class="text-danger small">{{ form.asset_type.errors }}</div>{% endif %}
         </div>
-      {% endfor %}
+        <div class="col-md-8">
+          <label class="form-label">{{ form.name.label }}</label>
+          {{ form.name }}
+          {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors }}</div>{% endif %}
+        </div>
+      </div>
+
+      <div class="row g-3 mb-3">
+        <div class="col-md-4">
+          <label class="form-label">{{ form.environment_root.label }}</label>
+          {{ form.environment_root }}
+          {% if form.environment_root.errors %}<div class="text-danger small">{{ form.environment_root.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">{{ form.path_context.label }}</label>
+          {{ form.path_context }}
+          {% if form.path_context.errors %}<div class="text-danger small">{{ form.path_context.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">{{ form.path.label }}</label>
+          {{ form.path }}
+          {% if form.path.help_text %}<div class="form-text">{{ form.path.help_text }}</div>{% endif %}
+          {% if form.path.errors %}<div class="text-danger small">{{ form.path.errors }}</div>{% endif %}
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">{{ form.content.label }}</label>
+        {{ form.content }}
+        {% if form.content.errors %}<div class="text-danger small">{{ form.content.errors }}</div>{% endif %}
+      </div>
+
+      <div class="alert alert-light border small" id="path-preview"></div>
 
       <div class="d-flex gap-2">
         <button type="submit" class="btn btn-primary">{% if is_create %}Create{% else %}Save{% endif %}</button>
@@ -38,4 +73,46 @@
     </form>
   </div>
 </div>
+
+<script>
+  (function () {
+    const envField = document.getElementById("id_environment_root");
+    const contextField = document.getElementById("id_path_context");
+    const nameField = document.getElementById("id_name");
+    const pathField = document.getElementById("id_path");
+    const preview = document.getElementById("path-preview");
+
+    if (!envField || !contextField || !nameField || !pathField || !preview) {
+      return;
+    }
+
+    function slugify(value) {
+      return (value || "")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-") || "asset";
+    }
+
+    function suffixForContext(context) {
+      if (context === "agents") return ".agent.md";
+      if (context === "skills") return ".skill.md";
+      if (context === "prompts") return ".prompt.md";
+      if (context === "specs") return ".spec.md";
+      return ".md";
+    }
+
+    function updatePath() {
+      const composed = `${envField.value}/${contextField.value}/${slugify(nameField.value)}${suffixForContext(contextField.value)}`;
+      pathField.value = composed;
+      preview.textContent = `Generated path: ${composed}`;
+    }
+
+    envField.addEventListener("change", updatePath);
+    contextField.addEventListener("change", updatePath);
+    nameField.addEventListener("input", updatePath);
+    updatePath();
+  })();
+</script>
 {% endblock %}

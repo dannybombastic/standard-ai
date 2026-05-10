@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Memoria — {{ project.name }} — {{ session.title|default:"Sesión" }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h4 class="mb-0">Memoria: {{ session.title|default:"(sin título)" }}</h4>
+    <small class="text-muted">
+      Proyecto: <a href="{% url 'projects:detail' project.slug %}">{{ project.name }}</a>
+      · external_id: <code>{{ session.external_id|default:"—" }}</code>
+    </small>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="{% url 'memory:project_sessions' project.slug %}" class="btn btn-sm btn-outline-secondary">← Sesiones</a>
+    <a href="{% url 'projects:detail' project.slug %}" class="btn btn-sm btn-outline-secondary">Proyecto</a>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-12 col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title mb-3">Detalles</h6>
+        <div class="small text-muted mb-1">Session ID</div>
+        <div class="mb-3"><code>{{ session.id }}</code></div>
+
+        <div class="small text-muted mb-1">Creada</div>
+        <div class="mb-3">{{ session.created_at|date:"Y-m-d H:i"|default:"—" }}</div>
+
+        <div class="small text-muted mb-1">Última actividad</div>
+        <div class="mb-0">{{ session.last_activity_at|date:"Y-m-d H:i"|default:"—" }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-8">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h6 class="mb-0">Entradas ({{ entries|length }})</h6>
+    </div>
+
+    {% if entries %}
+      {% for e in entries %}
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start gap-3">
+              <div>
+                <span class="badge bg-dark">{{ e.tag }}</span>
+                {% if e.title %}<strong class="ms-2">{{ e.title }}</strong>{% endif %}
+              </div>
+              <small class="text-muted">{{ e.created_at|date:"Y-m-d H:i" }}</small>
+            </div>
+
+            {% if e.content %}
+              <pre class="mt-3 mb-0" style="white-space: pre-wrap;">{{ e.content }}</pre>
+            {% endif %}
+
+            {% if e.metadata %}
+              <details class="mt-3">
+                <summary class="text-muted">metadata</summary>
+                <pre class="mt-2 mb-0" style="white-space: pre-wrap;">{{ e.metadata|pprint }}</pre>
+              </details>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-muted">No hay entradas todavía para esta sesión.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

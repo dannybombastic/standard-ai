@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar Asset{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 720px;">
+  <h1>Eliminar Asset</h1>
+
+  <p>
+    ¿Seguro que querés eliminar este asset?
+  </p>
+
+  <div style="padding: 12px; border: 1px solid #ddd; border-radius: 6px; background: #fafafa; margin: 16px 0;">
+    <div><strong>Nombre:</strong> {{ asset.name }}</div>
+    <div><strong>Tipo:</strong> {{ asset.asset_type }}</div>
+    <div><strong>Path:</strong> {{ asset.path }}</div>
+    <div><strong>ID:</strong> {{ asset.id }}</div>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a href="{% url 'assets:detail' project_slug=asset.project.slug pk=asset.pk %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

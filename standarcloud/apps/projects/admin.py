@@ -9,7 +9,7 @@ class ProjectConfigInline(admin.StackedInline):
     can_delete = False
     verbose_name = "Configuration"
     verbose_name_plural = "Configuration"
-    fields = ("visibility", "auto_backup", "backup_schedule", "extra")
+    fields = ("visibility", "extra")
     extra = 0
 
 
@@ -53,7 +53,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 @admin.register(ProjectConfig)
 class ProjectConfigAdmin(admin.ModelAdmin):
-    list_display = ("project", "visibility", "auto_backup", "backup_schedule")
-    list_filter = ("visibility", "auto_backup")
+    list_display = ("project", "visibility")
+    list_filter = ("visibility",)
     search_fields = ("project__name", "project__slug")
     readonly_fields = ("project",)

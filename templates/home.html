@@ -23,10 +23,9 @@
 {% block content %}
 <div class="mb-4">
   <h1 class="h3 fw-bold mb-0">⚡ StandarCloud</h1>
-  <p class="text-muted">Backup, sync and share your AI configuration files across every project.</p>
+  <p class="text-muted mb-0">Documentacion viva de la plataforma web y del MCP, alineada con el estado actual del sistema.</p>
 </div>
 
-<!-- Quick nav cards -->
 <div class="row g-3 mb-4">
   <div class="col-sm-4">
     <div class="card border-0 shadow-sm text-center py-3 position-relative">
@@ -50,67 +49,43 @@
   </div>
 </div>
 
-<!-- WHAT IS STANDARCLOUD -->
 <div class="card border-0 shadow-sm mb-4">
-  <div class="card-header bg-dark text-white">🤖 What is StandarCloud?</div>
+  <div class="card-header bg-dark text-white">✅ Estado Actual (Web + MCP)</div>
   <div class="card-body">
-    <p>
-      StandarCloud is a <strong>central repository</strong> for all the meta-files that AI coding
-      assistants use to understand your projects. Instead of re-writing the same instructions in
-      every repository, you define them once here and let the <strong>StandarCloud MCP server</strong>
-      inject them automatically into any AI tool that supports the Model Context Protocol (MCP).
+    <p class="mb-3">
+      StandarCloud centraliza contexto en la web (projects, assets, sessions, memory entries) y lo proyecta localmente mediante MCP.
+      El snapshot cloud es canonico y se sincroniza al workspace por entorno.
     </p>
-    <h6 class="fw-bold mt-3">Supported meta-files per AI tool</h6>
     <div class="table-responsive">
       <table class="table table-sm table-bordered align-middle mb-0">
         <thead class="table-dark">
-          <tr><th>Tool</th><th>Meta-file(s)</th><th>Purpose</th></tr>
+          <tr><th>Area</th><th>Funcionalidad vigente</th><th>Estado</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td>🟣 <strong>Claude / Claude Code</strong></td>
-            <td><code>CLAUDE.md</code></td>
-            <td>Project rules, commands and conventions injected into every session</td>
+            <td>Web / Projects</td>
+            <td>Listado, detalle, editar, borrar y navegacion de assets por proyecto</td>
+            <td>Activo</td>
           </tr>
           <tr>
-            <td>🔵 <strong>VS Code Copilot</strong></td>
-            <td><code>.github/copilot-instructions.md</code></td>
-            <td>Workspace-level custom instructions for GitHub Copilot</td>
+            <td>Web / Assets</td>
+            <td>Tipos: skill, agent, prompt, spec, other. Acciones en lista: View, Edit, Delete</td>
+            <td>Activo</td>
           </tr>
           <tr>
-            <td>🟡 <strong>Cursor</strong></td>
-            <td><code>.cursorrules</code> · <code>.cursor/rules/*.mdc</code></td>
-            <td>Global and per-directory coding rules for the Cursor AI editor</td>
+            <td>Web / Asset Form</td>
+            <td>Selectores de Environment (.github, .opencode, .claude) y Context (agents/prompts/skills/specs/assets) con path autogenerado</td>
+            <td>Activo</td>
           </tr>
           <tr>
-            <td>🟢 <strong>Windsurf</strong></td>
-            <td><code>.windsurfrules</code></td>
-            <td>Project-level coding instructions for Codeium Windsurf</td>
+            <td>Cloud Sync</td>
+            <td>ai_cloud_sync (web to workspace mirror, push opcional), ai_cloud_push, ai_cloud_status</td>
+            <td>Activo</td>
           </tr>
           <tr>
-            <td>⚪ <strong>OpenCode / Aider</strong></td>
-            <td><code>AGENTS.md</code> · <code>.aider.conf.yml</code></td>
-            <td>Agent behaviour, conventions and hints for agentic coding tools</td>
-          </tr>
-          <tr>
-            <td>🔴 <strong>Cline / Roo-Cline</strong></td>
-            <td><code>.clinerules</code> · <code>.roorules</code></td>
-            <td>Custom tool rules and memory injected by these VSCode extensions</td>
-          </tr>
-          <tr>
-            <td>🟠 <strong>Continue.dev</strong></td>
-            <td><code>.continue/config.json</code></td>
-            <td>Model selection, context providers and slash-command definitions</td>
-          </tr>
-          <tr>
-            <td>🔵 <strong>Devin</strong></td>
-            <td><code>DEVIN.md</code></td>
-            <td>Project setup, conventions and secrets guidance for Devin sessions</td>
-          </tr>
-          <tr>
-            <td>⚫ <strong>Any MCP-enabled tool</strong></td>
-            <td><code>AGENTS.md</code></td>
-            <td>Standardised agent instruction file (OpenAI Agents SDK convention)</td>
+            <td>Session Memory</td>
+            <td>ai_session_ensure, ai_memory_add, ai_memory_list, ai_memory_materialize_history</td>
+            <td>Activo</td>
           </tr>
         </tbody>
       </table>
@@ -118,69 +93,50 @@
   </div>
 </div>
 
-<!-- BACKUP & SYNC FLOW -->
 <div class="card border-0 shadow-sm mb-4">
-  <div class="card-header bg-dark text-white">🔄 Backup & Sync flow</div>
+  <div class="card-header bg-dark text-white">🧭 Entornos y convenciones de path</div>
   <div class="card-body">
-    <p class="text-muted small mb-3">
-      The MCP client reads your local AI meta-files and pushes them to StandarCloud.
-      From there they can be pulled into any other machine or project.
-    </p>
-    <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
-      <div class="card border border-primary px-3 py-2 text-center" style="min-width:130px">
-        <div>💻 Local project</div>
-        <div class="small text-muted">CLAUDE.md · .cursorrules…</div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="card border border-secondary px-3 py-2 text-center" style="min-width:130px">
-        <div>🔌 MCP client</div>
-        <div class="small text-muted">standarcloud-mcp</div>
-      </div>
-      <div class="flow-arrow">→</div>
-      <div class="card border border-success px-3 py-2 text-center" style="min-width:130px">
-        <div>☁️ StandarCloud API</div>
-        <div class="small text-muted">/api/v1/assets/sync</div>
-      </div>
-      <div class="flow-arrow">↕</div>
-      <div class="card border border-warning px-3 py-2 text-center" style="min-width:130px">
-        <div>🗄️ Asset store</div>
-        <div class="small text-muted">versioned per project</div>
-      </div>
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered mb-0">
+        <thead class="table-secondary">
+          <tr><th>Environment</th><th>Root</th><th>Contexts</th><th>Sufijos generados</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Copilot</td>
+            <td><code>.github/</code></td>
+            <td><code>agents</code>, <code>prompts</code>, <code>skills</code>, <code>specs</code>, <code>assets</code></td>
+            <td><code>.agent.md</code>, <code>.prompt.md</code>, <code>.skill.md</code>, <code>.spec.md</code>, <code>.md</code></td>
+          </tr>
+          <tr>
+            <td>OpenCode</td>
+            <td><code>.opencode/</code></td>
+            <td>Mismos contextos desde la UI de Assets</td>
+            <td>Mismas reglas de sufijo</td>
+          </tr>
+          <tr>
+            <td>Claude</td>
+            <td><code>.claude/</code></td>
+            <td>Mismos contextos desde la UI de Assets</td>
+            <td>Mismas reglas de sufijo</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <ol class="list-group list-group-flush list-group-numbered">
-      <li class="list-group-item">
-        <strong>Push (backup)</strong> – The MCP tool reads every AI meta-file in your repo root
-        and uploads them as <em>assets</em> linked to your project slug.
-      </li>
-      <li class="list-group-item">
-        <strong>Store</strong> – Each asset is stored with its filename, content and a timestamp.
-        Previous versions are kept for auditing.
-      </li>
-      <li class="list-group-item">
-        <strong>Pull (sync)</strong> – On a new machine or in CI, the MCP tool fetches all assets
-        for a project and writes the files back to disk — your AI tools pick them up automatically.
-      </li>
-      <li class="list-group-item">
-        <strong>Share</strong> – Team members using the same project slug share identical
-        instructions, ensuring consistent AI behaviour across the whole team.
-      </li>
-    </ol>
   </div>
 </div>
 
-<!-- INSTALL MCP SERVER -->
 <div class="card border-0 shadow-sm mb-4">
-  <div class="card-header bg-dark text-white">🚀 Install the StandarCloud MCP server</div>
+  <div class="card-header bg-dark text-white">🚀 MCP: instalacion y uso real</div>
   <div class="card-body">
 
     <!-- Step 1 -->
     <div class="d-flex gap-3 mb-4">
       <div class="step-badge">1</div>
       <div class="flex-grow-1">
-        <h6 class="fw-bold mb-1">Generate an API Token</h6>
+        <h6 class="fw-bold mb-1">Genera token API</h6>
         <p class="text-muted small mb-0">
-          Go to <a href="{% url 'tokens:list' %}">API Tokens</a>, create a token for your project
-          and copy it. This token authenticates every MCP request.
+          Crea un token en <a href="{% url 'tokens:list' %}">API Tokens</a>. Se usa para autenticar el MCP contra la API web.
         </p>
       </div>
     </div>
@@ -189,10 +145,9 @@
     <div class="d-flex gap-3 mb-4">
       <div class="step-badge">2</div>
       <div class="flex-grow-1">
-        <h6 class="fw-bold mb-1">Install the MCP package</h6>
-        <pre class="bg-dark text-light rounded p-3 mb-0"><code>pip install standarcloud-mcp
-# or run directly without a global install (requires uv)
-uvx standarcloud-mcp --help</code></pre>
+        <h6 class="fw-bold mb-1">Configura variables de entorno</h6>
+        <pre class="bg-dark text-light rounded p-3 mb-0"><code>export AI_CONTEXT_MANAGER_BASE_URL="http://localhost:8000"
+      export AI_CONTEXT_MANAGER_TOKEN="YOUR_TOKEN"</code></pre>
       </div>
     </div>
 
@@ -200,137 +155,32 @@ uvx standarcloud-mcp --help</code></pre>
     <div class="d-flex gap-3 mb-4">
       <div class="step-badge">3</div>
       <div class="flex-grow-1">
-        <h6 class="fw-bold mb-1">Register in your AI tool</h6>
-
-        <ul class="nav nav-tabs mb-0" id="mcpTabs" role="tablist">
-          <li class="nav-item">
-            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-claude">🟣 Claude</button>
-          </li>
-          <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-cursor">🟡 Cursor</button>
-          </li>
-          <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-vscode">🔵 VS Code</button>
-          </li>
-          <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-windsurf">🟢 Windsurf</button>
-          </li>
-          <li class="nav-item">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-cline">🔴 Cline</button>
-          </li>
-        </ul>
-
-        <div class="tab-content border border-top-0 rounded-bottom p-3 bg-light">
-
-          <!-- Claude Code -->
-          <div class="tab-pane fade show active" id="tab-claude">
-            <p class="small text-muted mb-2">
-              Add to <code>~/.claude/claude_desktop_config.json</code> or register via CLI:
-            </p>
-            <pre class="bg-dark text-light rounded p-3 mb-2"><code>claude mcp add standarcloud \
-  -e STANDARCLOUD_API_URL=http://localhost:8000 \
-  -e STANDARCLOUD_API_TOKEN=YOUR_TOKEN \
-  -- python -m standarcloud_mcp</code></pre>
-            <p class="small text-muted mb-0">
-              MCP tools exposed: <code>sync_assets</code>, <code>pull_assets</code>, <code>list_projects</code>.
-              Ask Claude to <em>"sync my AI files to StandarCloud"</em>.
-            </p>
-          </div>
-
-          <!-- Cursor -->
-          <div class="tab-pane fade" id="tab-cursor">
-            <p class="small text-muted mb-2">Create/edit <code>.cursor/mcp.json</code> in your project root:</p>
-            <pre class="bg-dark text-light rounded p-3 mb-0"><code>{
-  "mcpServers": {
-    "standarcloud": {
-      "command": "python",
-      "args": ["-m", "standarcloud_mcp"],
-      "env": {
-        "STANDARCLOUD_API_URL": "http://localhost:8000",
-        "STANDARCLOUD_API_TOKEN": "YOUR_TOKEN"
-      }
-    }
-  }
-}</code></pre>
-          </div>
-
-          <!-- VS Code -->
-          <div class="tab-pane fade" id="tab-vscode">
-            <p class="small text-muted mb-2">
-              Add to <code>.vscode/mcp.json</code> (workspace) or to user <code>settings.json</code>:
-            </p>
-            <pre class="bg-dark text-light rounded p-3 mb-0"><code>{
-  "servers": {
-    "standarcloud": {
-      "type": "stdio",
-      "command": "python",
-      "args": ["-m", "standarcloud_mcp"],
-      "env": {
-        "STANDARCLOUD_API_URL": "http://localhost:8000",
-        "STANDARCLOUD_API_TOKEN": "YOUR_TOKEN"
-      }
-    }
-  }
-}</code></pre>
-          </div>
-
-          <!-- Windsurf -->
-          <div class="tab-pane fade" id="tab-windsurf">
-            <p class="small text-muted mb-2">Edit <code>~/.codeium/windsurf/mcp_config.json</code>:</p>
-            <pre class="bg-dark text-light rounded p-3 mb-0"><code>{
-  "mcpServers": {
-    "standarcloud": {
-      "command": "python",
-      "args": ["-m", "standarcloud_mcp"],
-      "env": {
-        "STANDARCLOUD_API_URL": "http://localhost:8000",
-        "STANDARCLOUD_API_TOKEN": "YOUR_TOKEN"
-      }
-    }
-  }
-}</code></pre>
-          </div>
-
-          <!-- Cline -->
-          <div class="tab-pane fade" id="tab-cline">
-            <p class="small text-muted mb-2">
-              Open VS Code → Cline extension → <strong>MCP Servers</strong> → Add server, or
-              edit <code>cline_mcp_settings.json</code>:
-            </p>
-            <pre class="bg-dark text-light rounded p-3 mb-0"><code>{
-  "mcpServers": {
-    "standarcloud": {
-      "command": "python",
-      "args": ["-m", "standarcloud_mcp"],
-      "env": {
-        "STANDARCLOUD_API_URL": "http://localhost:8000",
-        "STANDARCLOUD_API_TOKEN": "YOUR_TOKEN"
-      }
-    }
-  }
-}</code></pre>
-          </div>
-
-        </div><!-- /tab-content -->
+        <h6 class="fw-bold mb-1">Arranca el servidor MCP</h6>
+        <pre class="bg-dark text-light rounded p-3 mb-0"><code>cd mcp-standard-ai
+python -m mcp_server</code></pre>
       </div>
     </div>
 
-    <!-- Step 4 -->
     <div class="d-flex gap-3">
       <div class="step-badge">4</div>
       <div class="flex-grow-1">
-        <h6 class="fw-bold mb-1">Use the MCP tools</h6>
+        <h6 class="fw-bold mb-1">Tools MCP disponibles</h6>
         <p class="text-muted small mb-2">
-          Once registered, your AI assistant gains these tools automatically:
+          Si hay token/base_url configurados, se habilitan herramientas cloud y de memoria.
         </p>
         <table class="table table-sm table-bordered mb-0">
           <thead class="table-secondary">
             <tr><th>Tool</th><th>What it does</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>list_projects</code></td><td>List all your StandarCloud projects</td></tr>
-            <tr><td><code>sync_assets</code></td><td>Upload local AI meta-files to StandarCloud</td></tr>
-            <tr><td><code>pull_assets</code></td><td>Download AI meta-files from StandarCloud to disk</td></tr>
+            <tr><td><code>ai_cloud_status</code></td><td>Estado local vs cloud (synced, only_local, only_cloud)</td></tr>
+            <tr><td><code>ai_cloud_sync</code></td><td>Mirror cloud to workspace (push opcional)</td></tr>
+            <tr><td><code>ai_cloud_push</code></td><td>Publica cambios locales hacia la web</td></tr>
+            <tr><td><code>ai_cloud_pull</code></td><td>Descarga assets remotos al workspace (deprecated, use sync)</td></tr>
+            <tr><td><code>ai_session_ensure</code></td><td>Crea/reutiliza sesiones vinculadas a proyecto</td></tr>
+            <tr><td><code>ai_memory_add</code></td><td>Guarda observaciones/decisiones en memoria cloud</td></tr>
+            <tr><td><code>ai_memory_list</code></td><td>Lista memoria por proyecto/sesion/tag</td></tr>
+            <tr><td><code>ai_memory_materialize_history</code></td><td>Materializa historico en formato nativo (Copilot/Claude/OpenCode)</td></tr>
           </tbody>
         </table>
       </div>
@@ -339,26 +189,40 @@ uvx standarcloud-mcp --help</code></pre>
   </div>
 </div>
 
-<!-- REST API REFERENCE -->
 <div class="card border-0 shadow-sm mb-4">
-  <div class="card-header bg-dark text-white">📡 REST API quick reference</div>
+  <div class="card-header bg-dark text-white">📡 API REST actual (Django)</div>
   <div class="card-body">
     <p class="small text-muted mb-3">
-      All endpoints are under <code>/api/v1/</code> and require the header
-      <code>Authorization: Token YOUR_TOKEN</code>.
+      Base: <code>/api/v1/</code>. Autenticacion por token: <code>Authorization: Token YOUR_TOKEN</code>.
     </p>
     <table class="table table-sm table-bordered mb-0">
       <thead class="table-secondary">
         <tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
       </thead>
       <tbody>
-        <tr><td><span class="badge bg-success">GET</span></td><td><code>/api/v1/projects/</code></td><td>List projects</td></tr>
-        <tr><td><span class="badge bg-primary">POST</span></td><td><code>/api/v1/projects/</code></td><td>Create project</td></tr>
-        <tr><td><span class="badge bg-success">GET</span></td><td><code>/api/v1/assets/?project=<slug></code></td><td>List assets for a project</td></tr>
-        <tr><td><span class="badge bg-primary">POST</span></td><td><code>/api/v1/assets/sync/</code></td><td>Upsert (push) assets</td></tr>
-        <tr><td><span class="badge bg-success">GET</span></td><td><code>/api/v1/assets/pull/?project=<slug></code></td><td>Pull assets to disk</td></tr>
+        <tr><td><span class="badge bg-success">GET</span></td><td><code>/api/v1/projects/</code></td><td>Lista proyectos del usuario</td></tr>
+        <tr><td><span class="badge bg-primary">POST</span></td><td><code>/api/v1/projects/</code></td><td>Crea proyecto</td></tr>
+        <tr><td><span class="badge bg-success">GET</span></td><td><code>/api/v1/assets/?project=&lt;slug&gt;&amp;type=&lt;tipo&gt;</code></td><td>Filtra assets por proyecto y tipo</td></tr>
+        <tr><td><span class="badge bg-primary">POST</span></td><td><code>/api/v1/assets/</code></td><td>Crea asset</td></tr>
+        <tr><td><span class="badge bg-success">GET</span></td><td><code>/api/v1/sessions/?project=&lt;slug&gt;</code></td><td>Lista sesiones de memoria</td></tr>
+        <tr><td><span class="badge bg-primary">POST</span></td><td><code>/api/v1/sessions/</code></td><td>Crea sesion</td></tr>
+        <tr><td><span class="badge bg-success">GET</span></td><td><code>/api/v1/sessions/&lt;id&gt;/entries/</code></td><td>Lista entradas de una sesion</td></tr>
+        <tr><td><span class="badge bg-primary">POST</span></td><td><code>/api/v1/sessions/&lt;id&gt;/entries/</code></td><td>Agrega entrada de memoria</td></tr>
+        <tr><td><span class="badge bg-success">GET</span></td><td><code>/api/v1/memory-entries/?project=&lt;slug&gt;&amp;tag=&lt;tag&gt;</code></td><td>Consulta global de memoria</td></tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+  <div class="card-header bg-dark text-white">🔄 Flujo recomendado de trabajo</div>
+  <div class="card-body">
+    <ol class="list-group list-group-numbered list-group-flush">
+      <li class="list-group-item">Crea/edita assets desde la web usando Environment + Context para generar paths consistentes.</li>
+      <li class="list-group-item">En tu workspace, ejecuta <code>ai_cloud_sync</code> para proyectar cloud a local (modo espejo).</li>
+      <li class="list-group-item">Si hiciste cambios locales, corre <code>ai_cloud_sync</code> con <code>push: true</code> o <code>ai_cloud_push</code>.</li>
+      <li class="list-group-item">Valida estado final con <code>ai_cloud_status</code> y revisa <code>.acm/sync-state.json</code>.</li>
+    </ol>
   </div>
 </div>
 

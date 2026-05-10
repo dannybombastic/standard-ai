@@ -40,10 +40,6 @@ class ProjectConfig(models.Model):
     visibility = models.CharField(
         max_length=10, choices=VISIBILITY_CHOICES, default=VISIBILITY_PRIVATE
     )
-    auto_backup = models.BooleanField(default=False)
-    backup_schedule = models.CharField(
-        max_length=50, blank=True, help_text="Cron expression, e.g. '0 2 * * *'"
-    )
     extra = models.JSONField(default=dict, blank=True)
 
     def __str__(self) -> str:

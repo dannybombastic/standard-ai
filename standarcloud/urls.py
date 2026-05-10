@@ -14,6 +14,7 @@ urlpatterns = [
     path("", include("standarcloud.apps.projects.urls")),
     path("assets/", include("standarcloud.apps.assets.urls")),
     path("tokens/", include("standarcloud.apps.tokens.urls")),
+    path("", include("standarcloud.apps.memory.urls")),
     # REST API v1
     path("api/v1/", include("standarcloud.apps.api.urls")),
 ]

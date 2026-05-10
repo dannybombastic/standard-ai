@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "standarcloud.apps.projects",
     "standarcloud.apps.assets",
     "standarcloud.apps.tokens",
+    "standarcloud.apps.memory",
 ]
 
 MIDDLEWARE = [

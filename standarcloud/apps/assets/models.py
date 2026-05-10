@@ -8,11 +8,13 @@ class Asset(models.Model):
     """A file asset belonging to a project (skill, prompt, spec, etc.)."""
 
     TYPE_SKILL = "skill"
+    TYPE_AGENT = "agent"
     TYPE_PROMPT = "prompt"
     TYPE_SPEC = "spec"
     TYPE_OTHER = "other"
     TYPE_CHOICES = [
         (TYPE_SKILL, "Skill"),
+        (TYPE_AGENT, "Agent"),
         (TYPE_PROMPT, "Prompt"),
         (TYPE_SPEC, "Spec"),
         (TYPE_OTHER, "Other"),
@@ -60,6 +62,19 @@ class PromptAsset(Asset):
 
     def save(self, *args, **kwargs):
         self.asset_type = Asset.TYPE_PROMPT
+        super().save(*args, **kwargs)
+
+
+class AgentAsset(Asset):
+    """Proxy model for Agent assets — shown as a dedicated section in admin."""
+
+    class Meta:
+        proxy = True
+        verbose_name = "Agent"
+        verbose_name_plural = "Agents"
+
+    def save(self, *args, **kwargs):
+        self.asset_type = Asset.TYPE_AGENT
         super().save(*args, **kwargs)
 
 

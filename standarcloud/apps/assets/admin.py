@@ -1,10 +1,11 @@
 """Admin configuration for the assets app."""
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Asset, SkillAsset, PromptAsset, SpecAsset, OtherAsset
+from .models import Asset, SkillAsset, PromptAsset, AgentAsset, SpecAsset, OtherAsset
 
 TYPE_COLORS = {
     Asset.TYPE_SKILL:  "#1565c0",
+    Asset.TYPE_AGENT:  "#00897b",
     Asset.TYPE_PROMPT: "#6a1b9a",
     Asset.TYPE_SPEC:   "#e65100",
     Asset.TYPE_OTHER:  "#37474f",
@@ -88,6 +89,18 @@ class PromptAssetAdmin(AssetBaseAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request).filter(asset_type=Asset.TYPE_PROMPT)
+
+    def get_fields(self, request, obj=None):
+        fields = super().get_fields(request, obj)
+        return [f for f in fields if f != "asset_type"]
+
+
+@admin.register(AgentAsset)
+class AgentAssetAdmin(AssetBaseAdmin):
+    """Admin for Agent assets only."""
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).filter(asset_type=Asset.TYPE_AGENT)
 
     def get_fields(self, request, obj=None):
         fields = super().get_fields(request, obj)

@@ -7,6 +7,7 @@
     <small class="text-muted">{{ project.slug }}</small>
   </div>
   <div class="d-flex gap-2">
+    <a href="{% url 'memory:project_sessions' project.slug %}" class="btn btn-sm btn-outline-primary">Memoria</a>
     <a href="{% url 'projects:update' project.slug %}" class="btn btn-sm btn-outline-secondary">Edit</a>
     <a href="{% url 'projects:delete' project.slug %}" class="btn btn-sm btn-outline-danger">Delete</a>
   </div>
@@ -20,16 +21,16 @@
   <h6 class="mb-0">Assets</h6>
   <div class="d-flex gap-2 flex-wrap">
     <a class="btn btn-sm btn-outline-primary" href="{% url 'assets:create_typed' project.slug 'skill' %}">+ Skill</a>
+    <a class="btn btn-sm btn-outline-primary" href="{% url 'assets:create_typed' project.slug 'agent' %}">+ Agent</a>
     <a class="btn btn-sm btn-outline-primary" href="{% url 'assets:create_typed' project.slug 'prompt' %}">+ Prompt</a>
     <a class="btn btn-sm btn-outline-primary" href="{% url 'assets:create_typed' project.slug 'spec' %}">+ Spec</a>
     <a class="btn btn-sm btn-outline-secondary" href="{% url 'assets:create' project.slug %}">+ Asset</a>
-    <a class="btn btn-sm btn-outline-secondary" href="{% url 'assets:list' project.slug %}">View all</a>
   </div>
 </div>
 
 {% if assets %}
 <table class="table table-sm table-hover">
-  <thead><tr><th>Name</th><th>Type</th><th>Size</th><th>Updated</th></tr></thead>
+  <thead><tr><th>Name</th><th>Type</th><th>Size</th><th>Updated</th><th></th></tr></thead>
   <tbody>
     {% for asset in assets %}
     <tr>
@@ -37,6 +38,12 @@
       <td><span class="badge bg-info text-dark">{{ asset.asset_type }}</span></td>
       <td>{{ asset.size_bytes|filesizeformat }}</td>
       <td>{{ asset.updated_at|date:"Y-m-d H:i"|default:"—" }}</td>
+      <td class="text-end">
+        <div class="d-flex gap-2 justify-content-end">
+          <a href="{% url 'assets:update' project.slug asset.pk %}" class="btn btn-sm btn-outline-secondary">Edit</a>
+          <a href="{% url 'assets:delete' project.slug asset.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </div>
+      </td>
     </tr>
     {% endfor %}
   </tbody>

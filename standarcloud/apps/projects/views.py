@@ -26,6 +26,11 @@ class ProjectDetailView(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         return Project.objects.filter(owner=self.request.user)
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["assets"] = self.object.assets.all().order_by("asset_type", "name")
+        return ctx
+
 
 class ProjectCreateView(LoginRequiredMixin, CreateView):
     model = Project
